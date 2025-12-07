@@ -1,0 +1,7 @@
+{
+  "name": "lab02_react",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}

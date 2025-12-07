@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KKU Campus Guide</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&amp;family=Prompt:wght@300;400;500;600&amp;display=swap"
+        rel="stylesheet">
+    <script src="/_sdk/element_sdk.js"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Prompt', 'Kanit', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100%;
+            width: 100%;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
+            padding: 50px 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveBackground 20s linear infinite;
+        }
+
+        @keyframes moveBackground {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #FFD700, #FFA500, #FF6B6B, #4ECDC4, #45B7D1, #FFD700);
+            background-size: 300% 100%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 0%;
+            }
+
+            50% {
+                background-position: 100% 0%;
+            }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        #kkuLogo {
+            margin: 0 auto 20px;
+            display: block;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+            animation: floatLogo 4s ease-in-out infinite;
+        }
+
+        @keyframes floatLogo {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        header h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: white;
+            margin: 20px 0;
+            text-shadow:
+                0 0 10px rgba(255, 215, 0, 0.8),
+                0 0 20px rgba(255, 215, 0, 0.6),
+                0 0 30px rgba(255, 215, 0, 0.4),
+                3px 3px 10px rgba(0, 0, 0, 0.5);
+            letter-spacing: 3px;
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from {
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.4), 3px 3px 10px rgba(0, 0, 0, 0.5);
+            }
+
+            to {
+                text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.6), 3px 3px 15px rgba(0, 0, 0, 0.6);
+            }
+        }
+
+        header p {
+            font-size: 18px;
+            color: #fff;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            font-weight: 500;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 20px 40px;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        nav a:hover::before {
+            width: 80%;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 50px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        main h2 {
+            text-align: center;
+            font-size: 42px;
+            color: white;
+            margin-bottom: 50px;
+            text-shadow:
+                0 0 20px rgba(0, 0, 0, 0.5),
+                2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        main h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(90deg, #FFD700, #FFA500, #FFD700);
+            border-radius: 2px;
+        }
+
+        .places {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .place {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .place::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .place:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .place:hover::before {
+            opacity: 1;
+        }
+
+        .place img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .place img[src=""] {
+            display: none;
+        }
+
+        .place img[alt]:after {
+            content: '🖼️ รูปภาพไม่พร้อมใช้งาน';
+            display: block;
+            text-align: center;
+            padding: 100px 20px;
+            background: #f0f0f0;
+            color: #999;
+        }
+
+        .place:hover img {
+            transform: scale(1.1);
+        }
+
+        .place h3 {
+            font-size: 24px;
+            color: #2c3e50;
+            padding: 20px 25px 10px;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+        }
+
+        .place p {
+            padding: 0 25px 25px;
+            color: #555;
+            font-size: 16px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+
+        form {
+            background: white;
+            padding: 50px;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #667eea);
+            background-size: 300% 100%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        form label {
+            display: block;
+            margin: 25px 0 10px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+
+        form input,
+        form textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Prompt', sans-serif;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        form input:focus,
+        form textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        form button {
+            width: 100%;
+            padding: 18px;
+            margin-top: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            font-family: 'Prompt', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        form button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        form button:active {
+            transform: translateY(0);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 80px;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+            width: 100%;
+        }
+
+        footer::before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #FFD700, #FFA500, #FF6B6B, #4ECDC4, #45B7D1, #FFD700);
+            background-size: 300% 100%;
+            animation: gradientShift 3s ease infinite;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 32px;
+            }
+
+            header p {
+                font-size: 14px;
+                padding: 12px 20px;
+            }
+
+            #kkuLogo {
+                width: 120px;
+                height: 120px;
+            }
+
+            nav a {
+                padding: 15px 25px;
+                font-size: 16px;
+                display: block;
+            }
+
+            main h2 {
+                font-size: 32px;
+            }
+
+            .places {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            form {
+                padding: 30px 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 30px 15px;
+            }
+
+            header h1 {
+                font-size: 24px;
+                letter-spacing: 1px;
+            }
+
+            #kkuLogo {
+                width: 100px;
+                height: 100px;
+            }
+
+            main {
+                margin: 30px auto;
+            }
+
+            main h2 {
+                font-size: 26px;
+            }
+
+            .place h3 {
+                font-size: 20px;
+            }
+
+            form {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+    <style>
+        @view-transition {
+            navigation: auto;
+        }
+    </style>
+    <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+    <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <canvas id="kkuLogo" width="160" height="160"></canvas>
+            <h1 id="siteTitle">KKU Campus Guide</h1>
+            <p><span id="studentId">รหัสนักศึกษา: 663380219-4</span> | <span id="studentName">ชื่อ-สกุล: นายพศวีร์
+                    ผองแก้ว</span></p>
+        </div>
+    </header>
+    <nav><a href="#places">📍 สถานที่เด่น</a> <a href="#form">✍️ แนะนำสถานที่</a>
+    </nav>
+    <main>
+        <h2 id="places">สถานที่ภายในมหาวิทยาลัยขอนแก่น</h2>
+        <div class="places">
+            <div class="place"><img
+                    src="https://scontent.fkkc2-1.fna.fbcdn.net/v/t39.30808-6/492552145_1247140874082263_5688624539114735543_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEZ6o9LLLokewft_P0EbjYiabeZ9dvlInppt5n12-UieodiMMmu-DAg_Q7klLXfOKdYmLXPVtC1rLEhM9pOesCF&_nc_ohc=Di8qdxWFWzwQ7kNvwGPW7Za&_nc_oc=AdnR4SBph2RU0Ze0JLUEQQ3piJyEtgIOSz5fgG8ihrNkESuebUKIIREC9Kb-a0SI6UEId21FZY8ftVuW8ilFCay1&_nc_zt=23&_nc_ht=scontent.fkkc2-1.fna&_nc_gid=qQ892n-tfZJDmqapZotUVw&oh=00_AfkXm3Mb8c8-cl5z4ghxZJ_qaGosAXV_J6TwAs3gXlzcDQ&oe=693AEF12"
+                    alt="ศูนย์อาหารคอมเพล็กซ์" onerror="this.src=''; this.alt='รูปภาพไม่พร้อมใช้งาน';">
+                <h3 id="place1Title">ศูนย์อาหารคอมเพล็กซ์ (Complex)</h3>
+                <p id="place1Desc">แหล่งรวมร้านอาหารยอดนิยมของนักศึกษา</p>
+            </div>
+            <div class="place"><img
+                    src="https://scontent.fkkc2-1.fna.fbcdn.net/v/t1.6435-9/128428428_3307654149339666_6182460962715250350_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeH-dv2kZ3F6lcD1JLTu8_F6rtXWYTE4cfmu1dZhMThx-fCkNrKdL8qyktHkXk2skP_vc4ERe4cS-JAA9e-qkMML&_nc_ohc=7n7i72PlT0cQ7kNvwES-wHt&_nc_oc=Adk-D8d523lgyZV7OqVq9NNQXD-sjOvC-GW4j_592ePp1NW0Zu2MriKoV2fsvYTrvx69hLDbOwn6D9H5wvY5nLDa&_nc_zt=23&_nc_ht=scontent.fkkc2-1.fna&_nc_gid=eg90I0_ea_kbKgUnRv8_cw&oh=00_AfmlJktx4-7YZgfXLpcxlzb4GjLQbNph9Q-NCTltbL9gQw&oe=695C9646"
+                    alt="บึงสีฐาน" onerror="this.src=''; this.alt='รูปภาพไม่พร้อมใช้งาน';">
+                <h3 id="place2Title">บึงสีฐาน</h3>
+                <p id="place2Desc">สถานที่พักผ่อน ออกกำลังกาย บรรยากาศดี</p>
+            </div>
+            <div class="place"><img src="https://sc.kku.ac.th/wp-content/uploads/2023/05/7R6A5564-2048x1365.jpg"
+                    alt="อาคาร SC" onerror="this.src=''; this.alt='รูปภาพไม่พร้อมใช้งาน';">
+                <h3 id="place3Title">อาคาร SC คณะวิทยาศาสตร์</h3>
+                <p id="place3Desc">ศูนย์กลางการเรียนวิทยาศาสตร์ของ มข.</p>
+            </div>
+            <div class="place"><img src="https://building.kku.ac.th/wp-content/uploads/2021/03/16921.jpg"
+                    alt="ประตูศรีฐาน" onerror="this.src=''; this.alt='รูปภาพไม่พร้อมใช้งาน';">
+                <h3 id="place4Title">ประตูศรีฐาน</h3>
+                <p id="place4Desc">สัญลักษณ์เข้ามหาวิทยาลัยขอนแก่น</p>
+            </div>
+        </div>
+        <h2 id="form"><span id="formTitle">แบบฟอร์มแนะนำสถานที่</span></h2>
+        <form action="https://api.web3forms.com/submit" method="POST"><input type="hidden" name="access_key"
+                value="cbe5211a-5c71-4afd-a316-694de4e3f50e"> <label>ชื่อสถานที่</label> <input type="text"
+                name="place_name" required placeholder="ระบุชื่อสถานที่"> <label>รายละเอียด</label> <textarea
+                name="details" rows="4" required placeholder="บอกเราเกี่ยวกับสถานที่นี้..."></textarea> <label>URL
+                รูปภาพ</label> <input type="url" name="image_url" required placeholder="https://example.com/image.jpg">
+            <button type="submit">ส่งข้อมูล 🚀</button>
+        </form>
+    </main>
+    <footer>
+        © 2025 KKU Campus Guide | Made with ❤️ for Khon Kaen University
+    </footer>
+    <script>
+        const defaultConfig = {
+            site_title: "KKU Campus Guide",
+            student_id: "รหัสนักศึกษา: 663380219-4",
+            student_name: "ชื่อ-สกุล: นายพศวีร์ ผองแก้ว",
+            place1_title: "ศูนย์อาหารคอมเพล็กซ์ (Complex)",
+            place1_desc: "แหล่งรวมร้านอาหารยอดนิยมของนักศึกษา",
+            place2_title: "บึงสีฐาน",
+            place2_desc: "สถานที่พักผ่อน ออกกำลังกาย บรรยากาศดี",
+            place3_title: "อาคาร SC คณะวิทยาศาสตร์",
+            place3_desc: "ศูนย์กลางการเรียนวิทยาศาสตร์ของ มข.",
+            place4_title: "ประตูศรีฐาน",
+            place4_desc: "สัญลักษณ์เข้ามหาวิทยาลัยขอนแก่น",
+            form_title: "แบบฟอร์มแนะนำสถานที่",
+            primary_color: "#667eea",
+            secondary_color: "#764ba2",
+            background_color: "#ffffff",
+            text_color: "#2c3e50",
+            accent_color: "#FFD700",
+            font_family: "Prompt",
+            font_size: 16
+        };
+
+        // Canvas Logo Animation
+        const canvas = document.getElementById('kkuLogo');
+        const ctx = canvas.getContext('2d');
+        let rotation = 0;
+        let pulse = 0;
+
+        function drawKKULogo() {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const time = Date.now() * 0.001;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Rotating gradient background
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(rotation);
+
+            const bgGradient = ctx.createRadialGradient(0, 0, 20, 0, 0, 80);
+            bgGradient.addColorStop(0, '#667eea');
+            bgGradient.addColorStop(0.5, '#764ba2');
+            bgGradient.addColorStop(1, '#f093fb');
+
+            ctx.fillStyle = bgGradient;
+            ctx.beginPath();
+            ctx.arc(0, 0, 75, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+
+            // Orbiting particles
+            for (let i = 0; i < 8; i++) {
+                const angle = (rotation * 2) + (i * Math.PI / 4);
+                const radius = 65 + Math.sin(time + i) * 5;
+                const x = centerX + Math.cos(angle) * radius;
+                const y = centerY + Math.sin(angle) * radius;
+
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = '#FFD700';
+                ctx.fill();
+
+                ctx.shadowColor = '#FFD700';
+                ctx.shadowBlur = 10;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+
+            // Inner circle
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 55 + Math.sin(pulse) * 3, 0, Math.PI * 2);
+            ctx.fillStyle = '#1e3c72';
+            ctx.fill();
+            ctx.strokeStyle = '#FFD700';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // KKU Text with glow
+            ctx.save();
+            ctx.font = 'bold 28px Kanit';
+            ctx.fillStyle = '#FFD700';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.shadowColor = '#FFD700';
+            ctx.shadowBlur = 20;
+            ctx.fillText('KKU', centerX, centerY - 10);
+            ctx.restore();
+
+            // Campus Guide Text
+            ctx.save();
+            ctx.font = 'bold 12px Kanit';
+            ctx.fillStyle = '#ffffff';
+            ctx.textAlign = 'center';
+            ctx.shadowColor = '#ffffff';
+            ctx.shadowBlur = 10;
+            ctx.fillText('CAMPUS', centerX, centerY + 12);
+            ctx.fillText('GUIDE', centerX, centerY + 26);
+            ctx.restore();
+
+            rotation += 0.01;
+            pulse += 0.05;
+
+            requestAnimationFrame(drawKKULogo);
+        }
+
+        drawKKULogo();
+
+        // Element SDK Integration
+        async function onConfigChange(config) {
+            document.getElementById('siteTitle').textContent = config.site_title || defaultConfig.site_title;
+            document.getElementById('studentId').textContent = config.student_id || defaultConfig.student_id;
+            document.getElementById('studentName').textContent = config.student_name || defaultConfig.student_name;
+
+            document.getElementById('place1Title').textContent = config.place1_title || defaultConfig.place1_title;
+            document.getElementById('place1Desc').textContent = config.place1_desc || defaultConfig.place1_desc;
+            document.getElementById('place2Title').textContent = config.place2_title || defaultConfig.place2_title;
+            document.getElementById('place2Desc').textContent = config.place2_desc || defaultConfig.place2_desc;
+            document.getElementById('place3Title').textContent = config.place3_title || defaultConfig.place3_title;
+            document.getElementById('place3Desc').textContent = config.place3_desc || defaultConfig.place3_desc;
+            document.getElementById('place4Title').textContent = config.place4_title || defaultConfig.place4_title;
+            document.getElementById('place4Desc').textContent = config.place4_desc || defaultConfig.place4_desc;
+
+            document.getElementById('formTitle').textContent = config.form_title || defaultConfig.form_title;
+
+            const primaryColor = config.primary_color || defaultConfig.primary_color;
+            const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const accentColor = config.accent_color || defaultConfig.accent_color;
+
+            document.body.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 50%, #f093fb 100%)`;
+
+            const formButton = document.querySelector('form button');
+            if (formButton) {
+                formButton.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
+            }
+
+            document.querySelectorAll('.place').forEach(el => {
+                el.style.background = backgroundColor;
+            });
+
+            document.querySelectorAll('.place h3').forEach(el => {
+                el.style.color = textColor;
+            });
+
+            document.querySelectorAll('.place p').forEach(el => {
+                el.style.color = textColor;
+            });
+
+            const customFont = config.font_family || defaultConfig.font_family;
+            const baseFontStack = 'sans-serif';
+            const baseSize = config.font_size || defaultConfig.font_size;
+
+            document.body.style.fontFamily = `${customFont}, 'Kanit', ${baseFontStack}`;
+
+            document.querySelector('header h1').style.fontSize = `${baseSize * 3}px`;
+            document.querySelectorAll('main h2').forEach(el => {
+                el.style.fontSize = `${baseSize * 2.625}px`;
+            });
+            document.querySelectorAll('.place h3').forEach(el => {
+                el.style.fontSize = `${baseSize * 1.5}px`;
+            });
+            document.querySelectorAll('p, input, textarea, button, label').forEach(el => {
+                el.style.fontSize = `${baseSize}px`;
+            });
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.primary_color || defaultConfig.primary_color,
+                        set: (value) => {
+                            if (window.elementSdk) {
+                                window.elementSdk.config.primary_color = value;
+                                window.elementSdk.setConfig({ primary_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.secondary_color || defaultConfig.secondary_color,
+                        set: (value) => {
+                            if (window.elementSdk) {
+                                window.elementSdk.config.secondary_color = value;
+                                window.elementSdk.setConfig({ secondary_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            if (window.elementSdk) {
+                                window.elementSdk.config.background_color = value;
+                                window.elementSdk.setConfig({ background_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            if (window.elementSdk) {
+                                window.elementSdk.config.text_color = value;
+                                window.elementSdk.setConfig({ text_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.accent_color || defaultConfig.accent_color,
+                        set: (value) => {
+                            if (window.elementSdk) {
+                                window.elementSdk.config.accent_color = value;
+                                window.elementSdk.setConfig({ accent_color: value });
+                            }
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        if (window.elementSdk) {
+                            window.elementSdk.config.font_family = value;
+                            window.elementSdk.setConfig({ font_family: value });
+                        }
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        if (window.elementSdk) {
+                            window.elementSdk.config.font_size = value;
+                            window.elementSdk.setConfig({ font_size: value });
+                        }
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["site_title", config.site_title || defaultConfig.site_title],
+                ["student_id", config.student_id || defaultConfig.student_id],
+                ["student_name", config.student_name || defaultConfig.student_name],
+                ["place1_title", config.place1_title || defaultConfig.place1_title],
+                ["place1_desc", config.place1_desc || defaultConfig.place1_desc],
+                ["place2_title", config.place2_title || defaultConfig.place2_title],
+                ["place2_desc", config.place2_desc || defaultConfig.place2_desc],
+                ["place3_title", config.place3_title || defaultConfig.place3_title],
+                ["place3_desc", config.place3_desc || defaultConfig.place3_desc],
+                ["place4_title", config.place4_title || defaultConfig.place4_title],
+                ["place4_desc", config.place4_desc || defaultConfig.place4_desc],
+                ["form_title", config.form_title || defaultConfig.form_title]
+            ]);
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9aa22662742b45ab',t:'MTc2NTA5MDg2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>
